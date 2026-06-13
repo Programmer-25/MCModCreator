@@ -1,5 +1,51 @@
-<input id="prompt" placeholder="Describe your mod">
-<button onclick="generate()">Generate Mod</button>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Minecraft Mod Generator</title>
+
+    <style>
+        body {
+            background: #111;
+            color: white;
+            font-family: Arial;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        input {
+            width: 350px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #status {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🤖 AI Minecraft Mod Generator</h1>
+
+<input
+    id="prompt"
+    placeholder="Describe your mod idea..."
+>
+
+<br>
+
+<button onclick="generate()">
+Generate Mod
+</button>
+
+<div id="status"></div>
 
 <script>
 function sanitize(text) {
@@ -10,20 +56,53 @@ function sanitize(text) {
 }
 
 async function generate() {
-    const prompt = document.getElementById("prompt").value;
 
-    const response = await fetch("zoomify-2.15.2+1.21.11.jar");
-    const blob = await response.blob();
+    const prompt =
+        document.getElementById("prompt").value;
 
-    const filename = `${sanitize(prompt || "ai_mod")}.jar`;
+    const status =
+        document.getElementById("status");
 
-    const url = URL.createObjectURL(blob);
+    status.innerHTML =
+        "🧠 AI analyzing mod concept...";
 
-    const a = document.createElement("a");
+    await new Promise(r => setTimeout(r, 1500));
+
+    status.innerHTML =
+        "⚙️ Generating Minecraft code...";
+
+    await new Promise(r => setTimeout(r, 1500));
+
+    status.innerHTML =
+        "📦 Building mod package...";
+
+    await new Promise(r => setTimeout(r, 1500));
+
+    const response =
+        await fetch("zoomify-2.15.2+1.21.11.jar");
+
+    const blob =
+        await response.blob();
+
+    const filename =
+        sanitize(prompt || "ai_mod") + ".jar";
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
     a.href = url;
     a.download = filename;
     a.click();
 
     URL.revokeObjectURL(url);
+
+    status.innerHTML =
+        "✅ Mod generated successfully!";
 }
 </script>
+
+</body>
+</html>
