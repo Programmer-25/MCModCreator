@@ -5,104 +5,63 @@
 
     <style>
         body {
-            background: #111;
-            color: white;
-            font-family: Arial;
+            background: #0f0f0f;
+            color: #00ff88;
+            font-family: monospace;
             text-align: center;
-            margin-top: 100px;
+            margin-top: 80px;
         }
 
         input {
-            width: 350px;
+            width: 400px;
             padding: 10px;
             font-size: 16px;
+            margin-top: 10px;
         }
 
         button {
-            padding: 10px 20px;
-            margin-top: 10px;
+            padding: 12px 25px;
+            margin-top: 15px;
             font-size: 16px;
             cursor: pointer;
+            background: #00ff88;
+            border: none;
+            color: black;
+            font-weight: bold;
         }
 
         #status {
-            margin-top: 20px;
+            margin-top: 30px;
+            white-space: pre-line;
+        }
+
+        .box {
+            border: 1px solid #00ff88;
+            padding: 30px;
+            width: 500px;
+            margin: auto;
+            box-shadow: 0 0 20px #00ff8840;
         }
     </style>
 </head>
+
 <body>
 
-<h1>🤖 AI Minecraft Mod Generator</h1>
+<div class="box">
 
-<input
-    id="prompt"
-    placeholder="Describe your mod idea..."
->
+    <h1>🤖 AI Minecraft Mod Generator</h1>
 
-<br>
+    <input id="prompt" placeholder="Describe your mod idea...">
 
-<button onclick="generate()">
-Generate Mod
-</button>
+    <br>
 
-<div id="status"></div>
+    <button onclick="generate()">Generate Mod</button>
 
-<script>
-function sanitize(text) {
-    return text
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "_")
-        .replace(/^_+|_+$/g, "");
-}
+    <div id="status"></div>
 
-async function generate() {
+</div>
 
-    const prompt =
-        document.getElementById("prompt").value;
-
-    const status =
-        document.getElementById("status");
-
-    status.innerHTML =
-        "🧠 AI analyzing mod concept...";
-
-    await new Promise(r => setTimeout(r, 1500));
-
-    status.innerHTML =
-        "⚙️ Generating Minecraft code...";
-
-    await new Promise(r => setTimeout(r, 1500));
-
-    status.innerHTML =
-        "📦 Building mod package...";
-
-    await new Promise(r => setTimeout(r, 1500));
-
-    const response =
-        await fetch("base_mod.jar");
-
-    const blob =
-        await response.blob();
-
-    const filename =
-        sanitize(prompt || "ai_mod") + ".jar";
-
-    const url =
-        URL.createObjectURL(blob);
-
-    const a =
-        document.createElement("a");
-
-    a.href = url;
-    a.download = filename;
-    a.click();
-
-    URL.revokeObjectURL(url);
-
-    status.innerHTML =
-        "✅ Mod generated successfully!";
-}
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
